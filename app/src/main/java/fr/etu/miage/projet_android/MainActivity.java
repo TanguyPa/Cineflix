@@ -1,6 +1,7 @@
 package fr.etu.miage.projet_android;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -9,6 +10,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import fr.etu.miage.projet_android.model.PopularCollection;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,4 +33,28 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    private void fetchMetromobiliteData() {
+        TmdbService tmdbService = RetrofitClient.getInstance().create(TmdbService.class);
+        tmdbService.getPopular("1abe855bc465dce9287da07b08a664eb", null, null, null).enqueue(new Callback<PopularCollection>() {
+
+            @Override
+            public void onResponse(Call<PopularCollection> call, Response<PopularCollection> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    //Manage data
+                    PopularCollection collection = response.body();
+                    System.out.println(collection.getTotalResults());
+
+                    System.out.println(collection.getResults().get(0).getTitle());
+                    //recyclerAdapter.addFeatureList(collection.getFeatureList());
+                } else {
+                    Toast.makeText(getApplicationContext(), "Erreur", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PopularCollection> call, Throwable t) {
+                //Manage errors
+            }
+        });
+    }
 }
