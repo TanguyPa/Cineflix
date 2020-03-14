@@ -1,6 +1,7 @@
 package fr.etu.miage.projet_android;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,6 +19,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,30 +34,5 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-    }
-
-    private void fetchMetromobiliteData() {
-        TmdbService tmdbService = RetrofitClient.getInstance().create(TmdbService.class);
-        tmdbService.getPopular("1abe855bc465dce9287da07b08a664eb", null, null, null).enqueue(new Callback<PopularCollection>() {
-
-            @Override
-            public void onResponse(Call<PopularCollection> call, Response<PopularCollection> response) {
-                if(response.isSuccessful() && response.body() != null) {
-                    //Manage data
-                    PopularCollection collection = response.body();
-                    System.out.println(collection.getTotalResults());
-
-                    System.out.println(collection.getResults().get(0).getTitle());
-                    //recyclerAdapter.addFeatureList(collection.getFeatureList());
-                } else {
-                    Toast.makeText(getApplicationContext(), "Erreur", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<PopularCollection> call, Throwable t) {
-                //Manage errors
-            }
-        });
     }
 }

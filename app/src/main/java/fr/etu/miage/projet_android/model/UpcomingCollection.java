@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class PopularCollection {
+public class UpcomingCollection {
     @SerializedName("page")
     private int page;
     @SerializedName("total_results")
@@ -13,12 +13,15 @@ public class PopularCollection {
     private int totalPages;
     @SerializedName("results")
     private ArrayList<Movie> results;
+    @SerializedName("dates")
+    private DateUpcoming date;
 
-    public PopularCollection(int page, int totalResults, int totalPages, ArrayList<Movie> results) {
+    public UpcomingCollection(int page, int totalResults, int totalPages, ArrayList<Movie> results, DateUpcoming date) {
         this.page = page;
         this.totalResults = totalResults;
         this.totalPages = totalPages;
         this.results = results;
+        this.date = date;
     }
 
     public int getPage() {
@@ -37,6 +40,14 @@ public class PopularCollection {
         this.totalResults = totalResults;
     }
 
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
+
     public ArrayList<Movie> getResults() {
         return results;
     }
@@ -45,11 +56,11 @@ public class PopularCollection {
         this.results = results;
     }
 
-    public int getTotalPages() {
-        return totalPages;
+    public DateUpcoming getDate() {
+        return date;
     }
 
-    public void setTotalPages(int totalPages) {
-        this.totalPages = totalPages;
+    public void setDate(DateUpcoming date) {
+        this.date = date;
     }
 }
