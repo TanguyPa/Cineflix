@@ -1,13 +1,14 @@
-package fr.etu.miage.projet_android;
+package fr.etu.miage.projet_android.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
+
+import fr.etu.miage.projet_android.R;
 import fr.etu.miage.projet_android.model.Movie;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,9 +17,13 @@ import java.util.List;
 public class MovieViewAdapter extends RecyclerView.Adapter<MovieViewAdapter.ViewHolder> {
 
     private List<Movie> movies;
-    private AdapterView.OnItemClickListener listener;
+    private OnItemClickListener listener;
 
-    public MovieViewAdapter(List<Movie> movies, AdapterView.OnItemClickListener listener){
+    public interface OnItemClickListener {
+        void onItemClick(View view, Movie movie);
+    }
+
+    public MovieViewAdapter(List<Movie> movies, OnItemClickListener listener){
         this.listener = listener;
         this.movies = movies;
     }
@@ -41,10 +46,16 @@ public class MovieViewAdapter extends RecyclerView.Adapter<MovieViewAdapter.View
         final Movie movie = movies.get(position);
         //Debug
         //Picasso.get().setLoggingEnabled(true);
-        Picasso.get().load("https://image.tmdb.org/t/p/w185"+movie.getPosterPath())
+        Picasso.get().load("https://image.tmdb.org/t/p/w500"+movie.getPosterPath())
                 .placeholder(R.drawable.ic_dashboard_black_24dp)
                 .error(R.drawable.ic_home_black_24dp).into(holder.img);
         holder.txt.setText(movie.getTitle());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(v, movie);
+            }
+        });
     }
 
     @Override

@@ -1,48 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-                                                   android:layout_height="match_parent">
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/popular"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/txtUpcoming"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginBottom="10dp" app:layout_constraintTop_toBottomOf="@+id/txtPopular"
-            app:layout_constraintVertical_bias="0.025">
-    </androidx.recyclerview.widget.RecyclerView>
-    <TextView
-            android:text="@string/title_popular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtPopular"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            android:text="@string/title_upcoming"
             app:fontFamily="@font/arbutus"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="2dp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/popular" />
 
-    <androidx.recyclerview.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/upcoming"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/txtUpcoming"
-    >
-    </androidx.recyclerview.widget.RecyclerView>
-    <TextView
-            android:text="@string/title_upcoming"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtUpcoming"></androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/popular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtPopular"></androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/txtPopular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="@string/title_popular"
+            app:fontFamily="@font/arbutus"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtToprated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/title_toprated"
+            app:fontFamily="@font/arbutus"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/upcoming" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/toprated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtToprated" />
+
+        <TextView
+            android:id="@+id/txtNowplaying"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/txtUpcoming"
+            android:layout_marginTop="16dp"
+            android:text="@string/title_nowplaying"
             app:fontFamily="@font/arbutus"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="22dp"
-            app:layout_constraintTop_toBottomOf="@+id/popular"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toprated" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/nowplaying"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:paddingBottom="56dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtNowplaying" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>

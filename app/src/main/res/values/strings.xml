@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Projet_android</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Accueil</string>
+    <string name="title_favorite">Mes favoris</string>
+    <string name="title_search">Rechercher</string>
     <string name="title_popular">Films les plus populaires</string>
     <string name="title_upcoming">Films à venir</string>
+    <string name="title_toprated">Films les mieux notés</string>
+    <string name="title_nowplaying">Films actuellement en salles</string>
+
 </resources>
