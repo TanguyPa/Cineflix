@@ -32,8 +32,13 @@ public class MovieViewAdapter extends RecyclerView.Adapter<MovieViewAdapter.View
         this.movies = movies;
     }
 
-    public void addMovieList(List<Movie> featureList) {
-        this.movies.addAll(featureList);
+    public void addMovieList(List<Movie> moviesList) {
+        this.movies.addAll(moviesList);
+        notifyDataSetChanged();
+    }
+
+    public void setMovieList(List<Movie> moviesList) {
+        this.movies = moviesList;
         notifyDataSetChanged();
     }
 

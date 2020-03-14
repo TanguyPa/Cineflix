@@ -2,7 +2,7 @@ package fr.etu.miage.projet_android.model;
 
 import com.google.gson.annotations.SerializedName;
 
-class Cast {
+public class Cast {
     @SerializedName("cast_id")
     private int castId;
     @SerializedName("character")

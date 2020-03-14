@@ -2,7 +2,7 @@ package fr.etu.miage.projet_android.model;
 
 import com.google.gson.annotations.SerializedName;
 
-class Crew {
+public class Crew {
     @SerializedName("credit_id")
     private String creditId;
     @SerializedName("department")

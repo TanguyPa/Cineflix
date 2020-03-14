@@ -23,4 +23,7 @@ public interface TmdbService {
 
     @GET("movie/{movie_id}")
     Call<MovieDetails> getMovieDetails(@Path("movie_id") int movieId, @Query("api_key") String apiKey, @Query("language") String language, @Query("append_to_response") String appendToResponse);
+
+    @GET("search/movie")
+    Call<MoviesCollection> searchMovies(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String query,  @Query("page") Integer page, @Query("include_adult") Boolean includeAdult, @Query("region") String region, @Query("year") Integer year, @Query("primary_release_year") Integer primaryReleaseYear);
 }

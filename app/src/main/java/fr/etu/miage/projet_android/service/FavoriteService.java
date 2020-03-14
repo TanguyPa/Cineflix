@@ -2,12 +2,10 @@ package fr.etu.miage.projet_android.service;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-import fr.etu.miage.projet_android.R;
 
 public class FavoriteService {
 

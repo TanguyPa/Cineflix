@@ -47,7 +47,7 @@ public class FavoriteFragment extends Fragment {
         gridLayout = root.findViewById(R.id.gridLayout);
         favoritesView = root.findViewById(R.id.favorites);
 
-        //Initialize layoutManager with a LinearLayoutManager, by default vertical
+        //Initialize layoutManager
         favoritesView.setLayoutManager(new GridLayoutManager(root.getContext(),3));
 
         //Create adapter with the OnItemClickListener implementation to get movie details
@@ -68,12 +68,6 @@ public class FavoriteFragment extends Fragment {
                     ((ImageView) view).setImageResource(R.drawable.ic_favorite_red_24dp);
                 } else {
                     favoritesAdapter.removeMovie(movie);
-                   // favoritesAdapter.notifyDataSetChanged();
-                   // ((ViewManager) view.getParent().getParent().getParent()).removeView((View)view.getParent().getParent());
-                    //gridLayout.refreshDrawableState();
-                    //FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    //ft.detach(FavoriteFragment.this).attach(FavoriteFragment.this).commit();
-
                 }
             }
         };
@@ -100,7 +94,6 @@ public class FavoriteFragment extends Fragment {
                         MovieDetails movieDetails = response.body();
                         Movie movie = new Movie(movieDetails.getPopularity(),movieDetails.getVoteCount(),movieDetails.getVideo(),movieDetails.getPosterPath(),movieDetails.getId(),movieDetails.getAdult(),movieDetails.getBackdropPath(),
                                 movieDetails.getOriginalLanguage(),movieDetails.getOriginalTitle(),null, movieDetails.getTitle(),movieDetails.getVoteAverage(),movieDetails.getOverview(),movieDetails.getReleaseDate());
-                        //moviesFav.add(movie);
                         favoritesAdapter.addMovie(movie);
                     } else {
                         Toast.makeText(getActivity().getApplicationContext(), "Erreur", Toast.LENGTH_LONG).show();
@@ -115,6 +108,5 @@ public class FavoriteFragment extends Fragment {
                 }
             });
         }
-        //favoritesAdapter.addMovieList(moviesFav);
     }
 }

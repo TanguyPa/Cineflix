@@ -1,6 +1,8 @@
 package fr.etu.miage.projet_android.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -9,8 +11,14 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import fr.etu.miage.projet_android.R;
 import fr.etu.miage.projet_android.RetrofitClient;
+import fr.etu.miage.projet_android.adapter.CastingViewAdapter;
+import fr.etu.miage.projet_android.adapter.CrewViewAdapter;
+import fr.etu.miage.projet_android.model.Cast;
+import fr.etu.miage.projet_android.model.Crew;
 import fr.etu.miage.projet_android.service.TmdbService;
 import fr.etu.miage.projet_android.model.MovieDetails;
 import retrofit2.Call;
@@ -24,6 +32,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private static final String TAG = MovieDetailsActivity.class.getSimpleName();
     private ImageView movieImage;
     private TextView movieTitle;
+    private RecyclerView castingView;
+    private RecyclerView crewView;
+    private CastingViewAdapter castingAdapter;
+    private CrewViewAdapter crewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +43,18 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_details);
         movieImage = findViewById(R.id.movieImage);
         movieTitle = findViewById(R.id.textMovieTitle);
+
+        castingView = this.findViewById(R.id.recyclerViewCasting);
+        crewView = this.findViewById(R.id.recyclerViewCrew);
+        //Initialize layoutManager with a LinearLayoutManager, by default vertical
+        castingView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        crewView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        //Create adapter
+        castingAdapter = new CastingViewAdapter(new ArrayList<Cast>());
+        crewAdapter = new CrewViewAdapter(new ArrayList<Crew>());
+
+        castingView.setAdapter(castingAdapter);
+        crewView.setAdapter(crewAdapter);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
@@ -41,7 +65,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private void fetchMovieDetailsData(int movieId) {
         TmdbService tmdbService = RetrofitClient.getInstance().create(TmdbService.class);
-        tmdbService.getMovieDetails(movieId,"1abe855bc465dce9287da07b08a664eb", "fr-FR", null).enqueue(new Callback<MovieDetails>() {
+        tmdbService.getMovieDetails(movieId,"1abe855bc465dce9287da07b08a664eb", "fr-FR", "credits").enqueue(new Callback<MovieDetails>() {
 
             @Override
             public void onResponse(Call<MovieDetails> call, Response<MovieDetails> response) {
@@ -65,9 +89,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private void displayData(MovieDetails movieDetails) {
         Picasso.get().load("https://image.tmdb.org/t/p/w500"+movieDetails.getBackdropPath())
                 .placeholder( R.drawable.progress_animation)
-                .error(R.drawable.ic_home_black_24dp)
+                .error(R.drawable.ic_account_box_black_24dp)
                 .into(movieImage);
         movieTitle.setText(movieDetails.getTitle());
-
+        castingAdapter.addCastList(movieDetails.getCredits().getCast());
+        crewAdapter.addCastList(movieDetails.getCredits().getCrew());
     }
 }

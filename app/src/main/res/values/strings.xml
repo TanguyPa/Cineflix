@@ -7,5 +7,8 @@
     <string name="title_upcoming">Films à venir</string>
     <string name="title_toprated">Films les mieux notés</string>
     <string name="title_nowplaying">Films actuellement en salles</string>
+    <string name="casting">Casting</string>
+    <string name="crew">Équipe</string>
+    <string name="searchText">Rechercher un film</string>
 
 </resources>

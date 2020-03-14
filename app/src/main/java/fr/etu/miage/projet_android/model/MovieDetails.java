@@ -55,8 +55,10 @@ public class MovieDetails {
     private double voteAverage;
     @SerializedName("vote_count")
     private int voteCount;
+    @SerializedName("credits")
+    private Credits credits;
 
-    public MovieDetails(Boolean adult, String backdropPath, BelongToCollection belongToCollection, int budget, ArrayList<Genre> genres, String homepage, int id, String imdbId, String originalLanguage, String originalTitle, String overview, double popularity, String posterPath, ArrayList<ProductionCompanie> productionCompanies, ArrayList<ProductionCountrie> productionCountries, String releaseDate, int revenue, int runtime, ArrayList<SpokenLanguage> spokenLanguages, String status, String tagline, String title, Boolean video, double voteAverage, int voteCount) {
+    public MovieDetails(Boolean adult, String backdropPath, BelongToCollection belongToCollection, int budget, ArrayList<Genre> genres, String homepage, int id, String imdbId, String originalLanguage, String originalTitle, String overview, double popularity, String posterPath, ArrayList<ProductionCompanie> productionCompanies, ArrayList<ProductionCountrie> productionCountries, String releaseDate, int revenue, int runtime, ArrayList<SpokenLanguage> spokenLanguages, String status, String tagline, String title, Boolean video, double voteAverage, int voteCount, Credits credits) {
         this.adult = adult;
         this.backdropPath = backdropPath;
         this.belongToCollection = belongToCollection;
@@ -82,6 +84,7 @@ public class MovieDetails {
         this.video = video;
         this.voteAverage = voteAverage;
         this.voteCount = voteCount;
+        this.credits = credits;
     }
 
     public Boolean getAdult() {
@@ -282,5 +285,13 @@ public class MovieDetails {
 
     public void setVoteCount(int voteCount) {
         this.voteCount = voteCount;
+    }
+
+    public Credits getCredits() {
+        return credits;
+    }
+
+    public void setCredits(Credits credits) {
+        this.credits = credits;
     }
 }
