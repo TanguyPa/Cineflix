@@ -64,7 +64,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private void displayData(MovieDetails movieDetails) {
         Picasso.get().load("https://image.tmdb.org/t/p/w500"+movieDetails.getBackdropPath())
-                .placeholder(R.drawable.ic_dashboard_black_24dp)
+                .placeholder( R.drawable.progress_animation)
                 .error(R.drawable.ic_home_black_24dp)
                 .into(movieImage);
         movieTitle.setText(movieDetails.getTitle());
