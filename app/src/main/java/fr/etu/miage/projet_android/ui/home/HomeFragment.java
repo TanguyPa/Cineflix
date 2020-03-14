@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import fr.etu.miage.projet_android.activity.MovieDetailsActivity;
 import fr.etu.miage.projet_android.adapter.MovieViewAdapter;
 import fr.etu.miage.projet_android.model.Movie;
 import fr.etu.miage.projet_android.model.MoviesCollection;
+import fr.etu.miage.projet_android.service.FavoriteService;
 import fr.etu.miage.projet_android.service.TmdbService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,19 +56,31 @@ public class HomeFragment extends Fragment {
         topRatedView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false));
         nowPlayingView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false));
 
-        //Create adapter with the OnItemClickListener implementation
+        //Create adapter with the OnItemClickListener implementation to get movie details
         MovieViewAdapter.OnItemClickListener onItemClickListener = new MovieViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, Movie movie) {
-                Intent intent = new Intent(getContext(), MovieDetailsActivity.class);
-                intent.putExtra(MOVIE_NAME, movie.getId());
-                startActivity(intent);
+                    Intent intent = new Intent(getContext(), MovieDetailsActivity.class);
+                    intent.putExtra(MOVIE_NAME, movie.getId());
+                    startActivity(intent);
             }
         };
-        popularAdapter = new MovieViewAdapter(new ArrayList<Movie>(),onItemClickListener);
-        upcomingAdapter = new MovieViewAdapter(new ArrayList<Movie>(), onItemClickListener);
-        topRatedAdapter = new MovieViewAdapter(new ArrayList<Movie>(), onItemClickListener);
-        nowPlayingAdapter = new MovieViewAdapter(new ArrayList<Movie>(), onItemClickListener);
+        //Create adapter with the OnItemClickListener implementation to add or remove a movie from favorite
+        MovieViewAdapter.OnItemClickListener favOnClickListener = new MovieViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, Movie movie) {
+                boolean added = FavoriteService.clickOnMovie(view.getContext(), movie.getId());
+                if(added) {
+                    ((ImageView) view).setImageResource(R.drawable.ic_favorite_red_24dp);
+                } else {
+                    ((ImageView) view).setImageResource(R.drawable.ic_add_black_24dp);
+                }
+            }
+        };
+        popularAdapter = new MovieViewAdapter(new ArrayList<Movie>(),onItemClickListener,favOnClickListener);
+        upcomingAdapter = new MovieViewAdapter(new ArrayList<Movie>(), onItemClickListener,favOnClickListener);
+        topRatedAdapter = new MovieViewAdapter(new ArrayList<Movie>(), onItemClickListener,favOnClickListener);
+        nowPlayingAdapter = new MovieViewAdapter(new ArrayList<Movie>(), onItemClickListener,favOnClickListener);
 
         //Set the adapter
         popularView.setAdapter(popularAdapter);
@@ -93,7 +107,7 @@ public class HomeFragment extends Fragment {
                 if(response.isSuccessful() && response.body() != null) {
                     //Manage data
                     MoviesCollection collection = response.body();
-                    popularAdapter.addFeatureList(collection.getResults());
+                    popularAdapter.addMovieList(collection.getResults());
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Erreur", Toast.LENGTH_LONG).show();
                 }
@@ -103,7 +117,6 @@ public class HomeFragment extends Fragment {
             public void onFailure(Call<MoviesCollection> call, Throwable t) {
                 Toast.makeText(getContext(), TAG,Toast.LENGTH_LONG).show();
                 Log.d(TAG, t.getMessage());
-                Log.d(TAG, t.getCause().getMessage());
 //Manage errors
             }
         });
@@ -118,7 +131,7 @@ public class HomeFragment extends Fragment {
                 if(response.isSuccessful() && response.body() != null) {
                     //Manage data
                     MoviesCollection collection = response.body();
-                    upcomingAdapter.addFeatureList(collection.getResults());
+                    upcomingAdapter.addMovieList(collection.getResults());
 
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Erreur", Toast.LENGTH_LONG).show();
@@ -129,8 +142,8 @@ public class HomeFragment extends Fragment {
             public void onFailure(Call<MoviesCollection> call, Throwable t) {
                 Toast.makeText(getContext(), TAG,Toast.LENGTH_LONG).show();
                 Log.d(TAG, t.getMessage());
-                Log.d(TAG, t.getCause().getMessage());
-//Manage errors
+
+                //Manage errors
             }
         });
     }
@@ -144,7 +157,7 @@ public class HomeFragment extends Fragment {
                 if(response.isSuccessful() && response.body() != null) {
                     //Manage data
                     MoviesCollection collection = response.body();
-                    topRatedAdapter.addFeatureList(collection.getResults());
+                    topRatedAdapter.addMovieList(collection.getResults());
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Erreur", Toast.LENGTH_LONG).show();
                 }
@@ -154,7 +167,6 @@ public class HomeFragment extends Fragment {
             public void onFailure(Call<MoviesCollection> call, Throwable t) {
                 Toast.makeText(getContext(), TAG,Toast.LENGTH_LONG).show();
                 Log.d(TAG, t.getMessage());
-                Log.d(TAG, t.getCause().getMessage());
 //Manage errors
             }
         });
@@ -169,7 +181,7 @@ public class HomeFragment extends Fragment {
                 if(response.isSuccessful() && response.body() != null) {
                     //Manage data
                     MoviesCollection collection = response.body();
-                    nowPlayingAdapter.addFeatureList(collection.getResults());
+                    nowPlayingAdapter.addMovieList(collection.getResults());
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Erreur", Toast.LENGTH_LONG).show();
                 }
@@ -179,7 +191,6 @@ public class HomeFragment extends Fragment {
             public void onFailure(Call<MoviesCollection> call, Throwable t) {
                 Toast.makeText(getContext(), TAG,Toast.LENGTH_LONG).show();
                 Log.d(TAG, t.getMessage());
-                Log.d(TAG, t.getCause().getMessage());
 //Manage errors
             }
         });

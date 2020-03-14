@@ -3,7 +3,7 @@
     package="fr.etu.miage.projet_android">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,12 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity"></activity>
+        <service
+            android:name=".service.FavoriteService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.MovieDetailsActivity" />
         <activity
             android:name=".activity.SplashScreenActivity"
-            android:theme="@style/SplashScreenTheme"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
