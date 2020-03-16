@@ -71,6 +71,7 @@
 
         <TextView
             android:id="@+id/txtNowplaying"
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
