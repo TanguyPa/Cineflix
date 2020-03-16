@@ -15,8 +15,9 @@
             android:name=".service.FavoriteService"
             android:enabled="true"
             android:exported="true"></service>
-
-        <activity android:name=".activity.MainActivity" />
+<!--Main activity with custom theme without action bar-->
+        <activity android:name=".activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.MovieDetailsActivity" />
         <activity
             android:name=".activity.SplashScreenActivity"

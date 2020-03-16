@@ -8,7 +8,12 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 
+
 public interface TmdbService {
+    String BASE_URL = "https://api.themoviedb.org/3/";
+    // API KEY used for TMDB api
+    String API_KEY = "1abe855bc465dce9287da07b08a664eb";
+
     @GET("movie/popular")
     Call<MoviesCollection> getPopular(@Query("api_key") String apiKey,@Query("language") String language, @Query("page") Integer page, @Query("region") String region);
 

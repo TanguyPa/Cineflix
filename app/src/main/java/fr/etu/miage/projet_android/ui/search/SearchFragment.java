@@ -49,7 +49,7 @@ public class SearchFragment extends Fragment {
         searchView = root.findViewById(R.id.searchView);
         moviesSearchView = root.findViewById(R.id.searchMovies);
 
-        //Initialize layoutManager
+        //Initialize layoutManager, grid layout with 3 movie cards per line
         moviesSearchView.setLayoutManager(new GridLayoutManager(root.getContext(),3));
 
         //Create adapter with the OnItemClickListener implementation to get movie details
@@ -100,7 +100,7 @@ public class SearchFragment extends Fragment {
 
     private void fetchMoviesWithKeysWordData(final String query) {
         TmdbService tmdbService = RetrofitClient.getInstance().create(TmdbService.class);
-        tmdbService.searchMovies("1abe855bc465dce9287da07b08a664eb", "fr-FR",  query, null, null, null, null, null).enqueue(new Callback<MoviesCollection>() {
+        tmdbService.searchMovies(TmdbService.API_KEY, "fr-FR",  query, null, null, null, null, null).enqueue(new Callback<MoviesCollection>() {
             @Override
             public void onResponse(Call<MoviesCollection> call, Response<MoviesCollection> response) {
                 if(response.isSuccessful() && response.body() != null) {

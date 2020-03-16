@@ -67,7 +67,7 @@ public class MovieViewAdapter extends RecyclerView.Adapter<MovieViewAdapter.View
         //Picasso.get().setLoggingEnabled(true);
         Picasso.get().load("https://image.tmdb.org/t/p/w500"+movie.getPosterPath())
                 .placeholder( R.drawable.progress_animation)
-                .error(R.drawable.ic_home_black_24dp).into(holder.img);
+                .error(R.drawable.ic_block_black_24dp).into(holder.img);
         holder.txt.setText(movie.getTitle());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

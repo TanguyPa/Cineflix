@@ -46,7 +46,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         castingView = this.findViewById(R.id.recyclerViewCasting);
         crewView = this.findViewById(R.id.recyclerViewCrew);
-        //Initialize layoutManager with a LinearLayoutManager, by default vertical
+        //Initialize layoutManager with a LinearLayoutManager, by default horizontal
         castingView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         crewView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         //Create adapter
@@ -58,6 +58,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
+            //Get movie id pass to intent from last activity or fragment
             int name = bundle.getInt(MOVIE_NAME);
             fetchMovieDetailsData(name);
         }
@@ -65,7 +66,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     private void fetchMovieDetailsData(int movieId) {
         TmdbService tmdbService = RetrofitClient.getInstance().create(TmdbService.class);
-        tmdbService.getMovieDetails(movieId,"1abe855bc465dce9287da07b08a664eb", "fr-FR", "credits").enqueue(new Callback<MovieDetails>() {
+        tmdbService.getMovieDetails(movieId,TmdbService.API_KEY, "fr-FR", "credits").enqueue(new Callback<MovieDetails>() {
 
             @Override
             public void onResponse(Call<MovieDetails> call, Response<MovieDetails> response) {

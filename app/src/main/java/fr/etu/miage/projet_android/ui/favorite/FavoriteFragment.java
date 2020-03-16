@@ -47,7 +47,7 @@ public class FavoriteFragment extends Fragment {
         gridLayout = root.findViewById(R.id.gridLayout);
         favoritesView = root.findViewById(R.id.favorites);
 
-        //Initialize layoutManager
+        //Initialize layoutManager, grid layout with 3 movie cards per line
         favoritesView.setLayoutManager(new GridLayoutManager(root.getContext(),3));
 
         //Create adapter with the OnItemClickListener implementation to get movie details
@@ -86,7 +86,7 @@ public class FavoriteFragment extends Fragment {
         //final ArrayList<Movie> moviesFav = new ArrayList<>();
         TmdbService tmdbService = RetrofitClient.getInstance().create(TmdbService.class);
         for(Integer fav: favs) {
-            tmdbService.getMovieDetails(fav,"1abe855bc465dce9287da07b08a664eb", "fr-FR", null).enqueue(new Callback<MovieDetails>() {
+            tmdbService.getMovieDetails(fav,TmdbService.API_KEY, "fr-FR", null).enqueue(new Callback<MovieDetails>() {
                 @Override
                 public void onResponse(Call<MovieDetails> call, Response<MovieDetails> response) {
                     if(response.isSuccessful() && response.body() != null) {

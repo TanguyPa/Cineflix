@@ -50,14 +50,14 @@ public class HomeFragment extends Fragment {
         upcomingView = root.findViewById(R.id.upcoming);
         topRatedView = root.findViewById(R.id.toprated);
         nowPlayingView = root.findViewById(R.id.nowplaying);
-        //Initialize layoutManager with a LinearLayoutManager, by default vertical
+        //Initialize layoutManager with a LinearLayoutManager, by default horizontal
         popularView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false));
         upcomingView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false));
         topRatedView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false));
         nowPlayingView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false));
 
         //Create adapter with the OnItemClickListener implementation to get movie details
-        MovieViewAdapter.OnItemClickListener onItemClickListener = new MovieViewAdapter.OnItemClickListener() {
+        MovieViewAdapter.OnItemClickListener detailsClickListener = new MovieViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, Movie movie) {
                     Intent intent = new Intent(getContext(), MovieDetailsActivity.class);
@@ -72,15 +72,26 @@ public class HomeFragment extends Fragment {
                 boolean added = FavoriteService.clickOnMovie(view.getContext(), movie.getId());
                 if(added) {
                     ((ImageView) view).setImageResource(R.drawable.ic_favorite_red_24dp);
+                    //Need to refresh data of each adapter if we add a movie present in different adapter (if not only, one icon will be updated)
+                    nowPlayingAdapter.notifyDataSetChanged();
+                    popularAdapter.notifyDataSetChanged();
+                    topRatedAdapter.notifyDataSetChanged();
+                    upcomingAdapter.notifyDataSetChanged();
                 } else {
+                    //Need to refresh data of each adapter if we remmove a movie present in different adapter (if not only, one icon will be updated)
                     ((ImageView) view).setImageResource(R.drawable.ic_add_black_24dp);
+                    nowPlayingAdapter.notifyDataSetChanged();
+                    popularAdapter.notifyDataSetChanged();
+                    topRatedAdapter.notifyDataSetChanged();
+                    upcomingAdapter.notifyDataSetChanged();
                 }
             }
         };
-        popularAdapter = new MovieViewAdapter(new ArrayList<Movie>(),onItemClickListener,favOnClickListener);
-        upcomingAdapter = new MovieViewAdapter(new ArrayList<Movie>(), onItemClickListener,favOnClickListener);
-        topRatedAdapter = new MovieViewAdapter(new ArrayList<Movie>(), onItemClickListener,favOnClickListener);
-        nowPlayingAdapter = new MovieViewAdapter(new ArrayList<Movie>(), onItemClickListener,favOnClickListener);
+        //Create different adapter, with empty movie list, listener to display movie details, and listener to add/remove movie to favorite
+        popularAdapter = new MovieViewAdapter(new ArrayList<Movie>(),detailsClickListener,favOnClickListener);
+        upcomingAdapter = new MovieViewAdapter(new ArrayList<Movie>(), detailsClickListener,favOnClickListener);
+        topRatedAdapter = new MovieViewAdapter(new ArrayList<Movie>(), detailsClickListener,favOnClickListener);
+        nowPlayingAdapter = new MovieViewAdapter(new ArrayList<Movie>(), detailsClickListener,favOnClickListener);
 
         //Set the adapter
         popularView.setAdapter(popularAdapter);
@@ -88,6 +99,7 @@ public class HomeFragment extends Fragment {
         topRatedView.setAdapter(topRatedAdapter);
         nowPlayingView.setAdapter(nowPlayingAdapter);
 
+        //Call fetch method to get data of each category
         fetchPopularMoviesData();
         fetchUpComingMoviesData();
         fetchTopRatedMoviesData();
@@ -100,7 +112,7 @@ public class HomeFragment extends Fragment {
 
     private void fetchPopularMoviesData() {
         TmdbService tmdbService = RetrofitClient.getInstance().create(TmdbService.class);
-        tmdbService.getPopular("1abe855bc465dce9287da07b08a664eb", "fr-FR", null, null).enqueue(new Callback<MoviesCollection>() {
+        tmdbService.getPopular(TmdbService.API_KEY, "fr-FR", null, null).enqueue(new Callback<MoviesCollection>() {
 
             @Override
             public void onResponse(Call<MoviesCollection> call, Response<MoviesCollection> response) {
@@ -124,7 +136,7 @@ public class HomeFragment extends Fragment {
 
     private void fetchUpComingMoviesData() {
         TmdbService tmdbService = RetrofitClient.getInstance().create(TmdbService.class);
-        tmdbService.getUpcoming("1abe855bc465dce9287da07b08a664eb", "fr-FR", null, null).enqueue(new Callback<MoviesCollection>() {
+        tmdbService.getUpcoming(TmdbService.API_KEY, "fr-FR", null, null).enqueue(new Callback<MoviesCollection>() {
 
             @Override
             public void onResponse(Call<MoviesCollection> call, Response<MoviesCollection> response) {
@@ -150,7 +162,7 @@ public class HomeFragment extends Fragment {
 
     private void fetchTopRatedMoviesData() {
         TmdbService tmdbService = RetrofitClient.getInstance().create(TmdbService.class);
-        tmdbService.getTopRated("1abe855bc465dce9287da07b08a664eb", "fr-FR", null, null).enqueue(new Callback<MoviesCollection>() {
+        tmdbService.getTopRated(TmdbService.API_KEY, "fr-FR", null, null).enqueue(new Callback<MoviesCollection>() {
 
             @Override
             public void onResponse(Call<MoviesCollection> call, Response<MoviesCollection> response) {
@@ -174,7 +186,7 @@ public class HomeFragment extends Fragment {
 
     private void fetchNowPlayingMoviesData() {
         TmdbService tmdbService = RetrofitClient.getInstance().create(TmdbService.class);
-        tmdbService.getNowPlaying("1abe855bc465dce9287da07b08a664eb", "fr-FR", null, null).enqueue(new Callback<MoviesCollection>() {
+        tmdbService.getNowPlaying(TmdbService.API_KEY, "fr-FR", null, null).enqueue(new Callback<MoviesCollection>() {
 
             @Override
             public void onResponse(Call<MoviesCollection> call, Response<MoviesCollection> response) {
