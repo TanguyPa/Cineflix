@@ -6,16 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewManager;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -35,8 +32,8 @@ import retrofit2.Response;
 import static fr.etu.miage.projet_android.ui.home.HomeFragment.MOVIE_NAME;
 
 public class FavoriteFragment extends Fragment {
-    private RecyclerView favoritesView;
-    private MovieViewAdapter favoritesAdapter;
+    private RecyclerView view;
+    private MovieViewAdapter adapter;
     private GridLayout gridLayout;
 
     private static String TAG = FavoriteFragment.class.getSimpleName();
@@ -45,10 +42,10 @@ public class FavoriteFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_favorite, container, false);
         gridLayout = root.findViewById(R.id.gridLayout);
-        favoritesView = root.findViewById(R.id.favorites);
+        view = root.findViewById(R.id.favorites);
 
         //Initialize layoutManager, grid layout with 3 movie cards per line
-        favoritesView.setLayoutManager(new GridLayoutManager(root.getContext(),3));
+        view.setLayoutManager(new GridLayoutManager(root.getContext(),3));
 
         //Create adapter with the OnItemClickListener implementation to get movie details
         MovieViewAdapter.OnItemClickListener onItemClickListener = new MovieViewAdapter.OnItemClickListener() {
@@ -67,14 +64,14 @@ public class FavoriteFragment extends Fragment {
                 if(added) {
                     ((ImageView) view).setImageResource(R.drawable.ic_favorite_red_24dp);
                 } else {
-                    favoritesAdapter.removeMovie(movie);
+                    adapter.removeMovie(movie);
                 }
             }
         };
-        favoritesAdapter = new MovieViewAdapter(new ArrayList<Movie>(),onItemClickListener,favOnClickListener);
+        adapter = new MovieViewAdapter(new ArrayList<Movie>(),onItemClickListener,favOnClickListener);
 
         //Set the adapter
-        favoritesView.setAdapter(favoritesAdapter);
+        view.setAdapter(adapter);
 
         fetchFavoritesMoviesData();
 
@@ -85,7 +82,7 @@ public class FavoriteFragment extends Fragment {
         final ArrayList<Integer> favs = FavoriteService.getFavoritesMovies(this.getContext());
         //final ArrayList<Movie> moviesFav = new ArrayList<>();
         TmdbService tmdbService = RetrofitClient.getInstance().create(TmdbService.class);
-        for(Integer fav: favs) {
+        for(final Integer fav: favs) {
             tmdbService.getMovieDetails(fav,TmdbService.API_KEY, "fr-FR", null).enqueue(new Callback<MovieDetails>() {
                 @Override
                 public void onResponse(Call<MovieDetails> call, Response<MovieDetails> response) {
@@ -94,7 +91,7 @@ public class FavoriteFragment extends Fragment {
                         MovieDetails movieDetails = response.body();
                         Movie movie = new Movie(movieDetails.getPopularity(),movieDetails.getVoteCount(),movieDetails.getVideo(),movieDetails.getPosterPath(),movieDetails.getId(),movieDetails.getAdult(),movieDetails.getBackdropPath(),
                                 movieDetails.getOriginalLanguage(),movieDetails.getOriginalTitle(),null, movieDetails.getTitle(),movieDetails.getVoteAverage(),movieDetails.getOverview(),movieDetails.getReleaseDate());
-                        favoritesAdapter.addMovie(movie);
+                        adapter.addMovie(movie);
                     } else {
                         Toast.makeText(getActivity().getApplicationContext(), "Erreur", Toast.LENGTH_LONG).show();
                     }
