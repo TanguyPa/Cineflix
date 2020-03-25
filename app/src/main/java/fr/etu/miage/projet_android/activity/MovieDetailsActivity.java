@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import fr.etu.miage.projet_android.R;
-import fr.etu.miage.projet_android.RetrofitClient;
+import fr.etu.miage.projet_android.service.RetrofitClient;
 import fr.etu.miage.projet_android.adapter.CastingViewAdapter;
 import fr.etu.miage.projet_android.adapter.CrewViewAdapter;
 import fr.etu.miage.projet_android.model.Cast;

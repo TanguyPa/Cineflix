@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import fr.etu.miage.projet_android.R;
-import fr.etu.miage.projet_android.RetrofitClient;
+import fr.etu.miage.projet_android.service.RetrofitClient;
 import fr.etu.miage.projet_android.activity.MovieDetailsActivity;
 import fr.etu.miage.projet_android.adapter.MovieViewAdapter;
 import fr.etu.miage.projet_android.model.Movie;

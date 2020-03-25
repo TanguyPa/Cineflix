@@ -1,4 +1,4 @@
-package fr.etu.miage.projet_android;
+package fr.etu.miage.projet_android.service;
 
 import fr.etu.miage.projet_android.service.TmdbService;
 import okhttp3.OkHttpClient;

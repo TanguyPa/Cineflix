@@ -6,26 +6,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 import fr.etu.miage.projet_android.R;
-import fr.etu.miage.projet_android.RetrofitClient;
+import fr.etu.miage.projet_android.service.RetrofitClient;
 import fr.etu.miage.projet_android.activity.MovieDetailsActivity;
 import fr.etu.miage.projet_android.adapter.MovieViewAdapter;
 import fr.etu.miage.projet_android.model.Movie;
-import fr.etu.miage.projet_android.model.MovieDetails;
 import fr.etu.miage.projet_android.model.MoviesCollection;
 import fr.etu.miage.projet_android.service.FavoriteService;
 import fr.etu.miage.projet_android.service.TmdbService;
@@ -83,7 +79,9 @@ public class SearchFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 if(query != null && !query.isEmpty() && query.trim() != "") {
                     fetchMoviesWithKeysWordData(query);
-                };
+                } else {
+                    moviesSearchAdapter.setMovieList(new ArrayList<Movie>());
+                }
                 return false;
             }
 
@@ -91,7 +89,9 @@ public class SearchFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 if(newText != null && !newText.isEmpty() && newText.trim() != "") {
                     fetchMoviesWithKeysWordData(newText);
-                };
+                } else {
+                    moviesSearchAdapter.setMovieList(new ArrayList<Movie>());
+                }
                 return false;
             }
         });

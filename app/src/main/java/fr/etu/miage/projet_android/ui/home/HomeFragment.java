@@ -21,6 +21,7 @@ import fr.etu.miage.projet_android.adapter.MovieViewAdapter;
 import fr.etu.miage.projet_android.model.Movie;
 import fr.etu.miage.projet_android.model.MoviesCollection;
 import fr.etu.miage.projet_android.service.FavoriteService;
+import fr.etu.miage.projet_android.service.RetrofitClient;
 import fr.etu.miage.projet_android.service.TmdbService;
 import retrofit2.Call;
 import retrofit2.Callback;
