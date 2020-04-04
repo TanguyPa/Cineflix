@@ -68,9 +68,9 @@ public class HomeFragment extends Fragment {
         };
         //Create adapter with the OnItemClickListener implementation to add or remove a movie from favorite
         MovieViewAdapter.OnItemClickListener favOnClickListener = new MovieViewAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, Movie movie) {
-                boolean added = FavoriteService.clickOnMovie(view.getContext(), movie.getId());
+                    @Override
+                    public void onItemClick(View view, Movie movie) {
+                        boolean added = FavoriteService.clickOnMovie(view.getContext(), movie.getId());
                 if(added) {
                     ((ImageView) view).setImageResource(R.drawable.ic_favorite_red_24dp);
                     //Need to refresh data of each adapter if we add a movie present in different adapter (if not only, one icon will be updated)

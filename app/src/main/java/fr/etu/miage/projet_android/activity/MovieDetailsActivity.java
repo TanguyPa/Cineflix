@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +38,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private RecyclerView crewView;
     private CastingViewAdapter castingAdapter;
     private CrewViewAdapter crewAdapter;
+    private RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_details);
         movieImage = findViewById(R.id.movieImage);
         movieTitle = findViewById(R.id.textMovieTitle);
+        ratingBar = findViewById(R.id.ratingBar);
 
         castingView = this.findViewById(R.id.recyclerViewCasting);
         crewView = this.findViewById(R.id.recyclerViewCrew);
@@ -93,6 +97,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 .error(R.drawable.ic_account_box_black_24dp)
                 .into(movieImage);
         movieTitle.setText(movieDetails.getTitle());
+        ratingBar.setRating((float) (movieDetails.getVoteAverage()/2));
         castingAdapter.addCastList(movieDetails.getCredits().getCast());
         crewAdapter.addCastList(movieDetails.getCredits().getCrew());
     }

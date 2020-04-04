@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Projet_android</string>
+    <string name="app_name">Cineflix</string>
     <string name="title_home">Accueil</string>
     <string name="title_favorite">Mes favoris</string>
     <string name="title_search">Rechercher</string>

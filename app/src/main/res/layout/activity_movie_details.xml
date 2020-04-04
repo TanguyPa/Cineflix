@@ -30,43 +30,65 @@
             app:fontFamily="@font/arbutus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/movieImage"/>
+
         <TextView
-            android:layout_marginLeft="10dp"
             android:id="@+id/textCasting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="16dp"
             android:gravity="left"
-            android:textStyle="bold"
-            android:textSize="20dp"
-            app:fontFamily="@font/arbutus"
             android:text="@string/casting"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textMovieTitle"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewCasting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textCasting" />
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:id="@+id/textCrew"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="left"
-            android:textStyle="bold"
             android:textSize="20dp"
+            android:textStyle="bold"
             app:fontFamily="@font/arbutus"
-            android:text="@string/crew"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recyclerViewCasting"/>
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewCrew"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textCrew" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewCasting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textCasting" />
+
+        <TextView
+            android:id="@+id/textCrew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:gravity="left"
+            android:text="@string/crew"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:fontFamily="@font/arbutus"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recyclerViewCasting" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="63dp"
+            android:layout_marginStart="84dp"
+            android:layout_marginLeft="84dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="84dp"
+            android:layout_marginRight="84dp"
+            android:layout_marginBottom="84dp"
+            android:clickable="false"
+            android:isIndicator="true"
+            app:layout_constraintBottom_toTopOf="@+id/textCasting"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textMovieTitle" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
